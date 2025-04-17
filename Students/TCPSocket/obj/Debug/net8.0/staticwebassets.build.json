@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "b684ZDo0iVOpfYx7vuacTwxuL27CkbsSQoBTKQks2S8=",
+  "Source": "TCPSocket",
+  "BasePath": "_content/TCPSocket",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

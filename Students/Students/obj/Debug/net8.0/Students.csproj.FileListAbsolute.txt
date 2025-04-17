@@ -1,0 +1,15 @@
+D:\Project\ClassRoom\StudentsClass\Students\Students\bin\Debug\net8.0\Students.exe
+D:\Project\ClassRoom\StudentsClass\Students\Students\bin\Debug\net8.0\Students.deps.json
+D:\Project\ClassRoom\StudentsClass\Students\Students\bin\Debug\net8.0\Students.runtimeconfig.json
+D:\Project\ClassRoom\StudentsClass\Students\Students\bin\Debug\net8.0\Students.dll
+D:\Project\ClassRoom\StudentsClass\Students\Students\bin\Debug\net8.0\Students.pdb
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\Students.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\Students.AssemblyInfoInputs.cache
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\Students.AssemblyInfo.cs
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\Students.csproj.CoreCompileInputs.cache
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\Students.sourcelink.json
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\Students.dll
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\refint\Students.dll
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\Students.pdb
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\Students.genruntimeconfig.cache
+D:\Project\ClassRoom\StudentsClass\Students\Students\obj\Debug\net8.0\ref\Students.dll

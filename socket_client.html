@@ -2,20 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket Chat Room</title>
+    <title>Chat UI</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: sans-serif;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+        }
+
+        .input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background: #fff;
+        }
+
+        .input-container input {
+            flex: 1;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .input-container button {
+            margin-left: 10px;
+            padding: 8px 16px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <h1>WebSocket Chat Room</h1>
-    
-    <div>
-        <h3>Messages:</h3>
-        <div id="messages" style="height: 300px; overflow-y: scroll;"></div>
-    </div>
 
-    <div>
-        <input type="text" id="messageInput" placeholder="Type a message..." />
-        <button id="sendMessageButton">Send</button>
+    <div class="chat-container">
+        <div id="messages"></div>
+
+        <div class="input-container">
+            <input type="text" id="messageInput" placeholder="Type a message..." />
+            <button id="sendMessageButton">Send</button>
+        </div>
     </div>
 
     <script>
@@ -47,6 +90,16 @@
             socket.send("Chopper : " + message);  // ส่งข้อความไปที่ server
             document.getElementById("messageInput").value = "";  // ล้างข้อความใน input
         };
+
+        document.getElementById("messageInput").addEventListener('keyup', function (e) {
+            // ทำอะไรบางอย่าง เช่น ตรวจ key
+            if (e.key === 'Enter') {
+                const message = document.getElementById("messageInput").value;
+                socket.send("Chopper : " + message);  // ส่งข้อความไปที่ server
+                document.getElementById("messageInput").value = "";  // ล้างข้อความใน input
+            }
+        });
+
     </script>
 </body>
 </html>

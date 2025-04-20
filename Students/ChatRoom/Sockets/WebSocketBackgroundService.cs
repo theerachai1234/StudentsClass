@@ -6,73 +6,77 @@ namespace ChatRoom.Sockets
 {
     public class WebSocketBackgroundService : BackgroundService
     {
-        private readonly ConcurrentBag<WebSocket> _webSockets;
-
-        public WebSocketBackgroundService()
-        {
-            _webSockets = new ConcurrentBag<WebSocket>();
-        }
+        private readonly ConcurrentDictionary<Guid, WebSocket> _webSockets = new();
 
         public async Task AcceptWebSocketAsync(HttpContext context)
         {
-            if (context.WebSockets.IsWebSocketRequest)
+            if (!context.WebSockets.IsWebSocketRequest)
             {
-                using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                _webSockets.Add(webSocket);  // เก็บ WebSocket connection ที่เชื่อมต่อมา
+                context.Response.StatusCode = 400;
+                return;
+            }
 
-                var startMessage = "Start Chat Room";
-                var receiveBuffer = Encoding.UTF8.GetBytes(startMessage);
-                await webSocket.SendAsync(new ArraySegment<byte>(receiveBuffer), WebSocketMessageType.Text, true, CancellationToken.None);
+            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+            var id = Guid.NewGuid();
+            _webSockets.TryAdd(id, webSocket);
 
+            // ส่งข้อความเริ่มต้น
+            var welcomeMessage = Encoding.UTF8.GetBytes("Start Chat Room");
+            await webSocket.SendAsync(new ArraySegment<byte>(welcomeMessage), WebSocketMessageType.Text, true, CancellationToken.None);
 
+            var buffer = new byte[1024];
 
-                var buffer = new byte[1024];
+            try
+            {
                 while (webSocket.State == WebSocketState.Open)
                 {
                     var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
                     if (result.MessageType == WebSocketMessageType.Close)
                     {
                         await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
-                        _webSockets.TryTake(out _);  // ลบ WebSocket ที่ปิดการเชื่อมต่อแล้ว
                         break;
                     }
 
                     var receivedMessage = Encoding.UTF8.GetString(buffer, 0, result.Count);
                     Console.WriteLine($"Received: {receivedMessage}");
 
-                    // ส่งข้อความไปยังทุกๆ client ที่เชื่อมต่อ
-                    foreach (var socket in _webSockets)
+                    // ส่งข้อความไปยังทุก client ที่ยังเชื่อมต่ออยู่
+                    foreach (var pair in _webSockets)
                     {
-                        if (socket.State == WebSocketState.Open)
+                        if (pair.Value.State == WebSocketState.Open)
                         {
-                            var echoMessage = receivedMessage;
-                            var responseBytes = Encoding.UTF8.GetBytes(echoMessage);
-                            await socket.SendAsync(new ArraySegment<byte>(responseBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                            var responseBytes = Encoding.UTF8.GetBytes(receivedMessage);
+                            await pair.Value.SendAsync(new ArraySegment<byte>(responseBytes), WebSocketMessageType.Text, true, CancellationToken.None);
                         }
                     }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                context.Response.StatusCode = 400;
+                Console.WriteLine($"WebSocket error: {ex.Message}");
+            }
+            finally
+            {
+                _webSockets.TryRemove(id, out _);
             }
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // ฟังก์ชันนี้ทำงานเมื่อเชื่อมต่อสำเร็จ และส่งข้อความให้ client ทุกๆ 10 วินาที
             //while (!stoppingToken.IsCancellationRequested)
             //{
-            //    foreach (var socket in _webSockets)
+            //    foreach (var pair in _webSockets)
             //    {
+            //        var socket = pair.Value;
             //        if (socket.State == WebSocketState.Open)
             //        {
-            //            var message = "Ping: " + DateTime.Now.ToString("HH:mm:ss");
-            //            var buffer = Encoding.UTF8.GetBytes(message);
-            //            await socket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
+            //            var ping = Encoding.UTF8.GetBytes("Ping: " + DateTime.Now.ToString("HH:mm:ss"));
+            //            await socket.SendAsync(new ArraySegment<byte>(ping), WebSocketMessageType.Text, true, CancellationToken.None);
             //        }
             //    }
-            //    await Task.Delay(10000);  // ส่งข้อมูลทุกๆ 10 วินาที
+
+            //    await Task.Delay(10000, stoppingToken);
             //}
         }
     }

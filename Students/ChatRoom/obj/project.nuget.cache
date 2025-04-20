@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "7TkUTchT1v1HRo7jxXYHRaAnVfGEfOk0FHV10AUn1L/jNjBaGio2q9WTSHo3+ReIsEQFKArkYOfGnW2ds6USog==",
+  "dgSpecHash": "NRttvQ/7xtkUqr+TRwbM+80bFGRoaB3oGguWz0v+/76ZppBoTKFHn6K8m0HHKD0ACPeBuC1F/EjsBpgBS6rEzg==",
   "success": true,
   "projectFilePath": "D:\\Project\\ClassRoom\\StudentsClass\\Students\\ChatRoom\\ChatRoom.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\oopan\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\oopan\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
+    "C:\\Users\\oopan\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.5\\microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512",
     "C:\\Users\\oopan\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
     "C:\\Users\\oopan\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
     "C:\\Users\\oopan\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.6.2\\swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
